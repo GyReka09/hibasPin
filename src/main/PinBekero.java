@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -117,34 +118,46 @@ public class PinBekero extends javax.swing.JFrame {
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (kattDb <= 4) {
+                   
+                     if (kattDb <= 4 && mentve ==false) {
                         kattDb++;
                         pin += e.getActionCommand();
                     } 
                     if(kattDb == 4) {
+                        mentve = true;
                         chbMutat.setEnabled(true);
                         JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
+                        
                     }
-                    
+                 
                 }
             });
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void chbMutatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMutatActionPerformed
-        if(chbMutat.isSelected()){
-            for (int i = 0; i < pin.length(); i++) {
-                int gomb = Integer.parseInt(pin.charAt(i)+"");
-                jPanel1.getComponent(gomb).setBackground(Color.red);
-            }
-        }else{
-            chbMutat.setEnabled(false);
-            kattDb = 0;
-            for (int i = 0; i < pin.length(); i++) {
-                int gomb = Integer.parseInt(pin.charAt(i)+"");
-                jPanel1.getComponent(gomb).setBackground(Color.LIGHT_GRAY);
-            }
+private void szinezGombokat(Color szin) {
+    for (int i = 0; i < pin.length(); i++) {
+        int gomb = Integer.parseInt(pin.charAt(i) + "");
+        Component comp = jPanel1.getComponent(gomb);
+        if (comp instanceof JButton) {
+            comp.setBackground(szin);
         }
+    }
+}
+    
+
+
+    private void chbMutatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMutatActionPerformed
+if (chbMutat.isSelected()) {
+        szinezGombokat(Color.RED);
+    } else {
+        szinezGombokat(Color.LIGHT_GRAY);
+        kattDb = 0;
+        chbMutat.setEnabled(false);
+    }
+        
+        
+        
     }//GEN-LAST:event_chbMutatActionPerformed
 
     public static void main(String args[]) {
